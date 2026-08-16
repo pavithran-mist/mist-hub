@@ -9,7 +9,9 @@ export async function supabase() {
     {
       cookies: {
         getAll: () => jar.getAll(),
-        setAll: (cookiesToSet) => {
+        setAll: (
+          cookiesToSet: { name: string; value: string; options?: any }[]
+        ) => {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
               jar.set(name, value, options);
