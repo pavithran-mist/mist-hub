@@ -1,0 +1,2 @@
+"use server";import {redirect} from "next/navigation";import {supabase} from "@/lib/supabase/server";
+export async function registerForFreeEvent(formData:FormData){const db=await supabase();const {data:{user}}=await db.auth.getUser();if(!user)redirect("/login");const eventId=String(formData.get("eventId"));const {error}=await db.from("event_registrations").insert({event_id:eventId,user_id:user.id});redirect(`/events/${eventId}${error?"?error=Unable%20to%20register":"?message=You%27re%20registered"}`)}
